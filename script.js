@@ -2,13 +2,15 @@ const display = document.getElementById("display");
 const buttons = document.querySelectorAll("button");
 
 let currentInput = "";
-let operator = "";
 let firstValue = "";
+let operator = "";
+let shouldResetScreen = false;
 
 buttons.forEach(button => {
   button.addEventListener("click", () => {
     const value = button.textContent;
 
+    // CLEAR
     if (value === "C") {
       currentInput = "";
       firstValue = "";
@@ -17,22 +19,32 @@ buttons.forEach(button => {
       return;
     }
 
+    // OPERATOR
     if (["+", "-", "*", "/"].includes(value)) {
       if (currentInput === "") return;
-      operator = value;
       firstValue = currentInput;
-      currentInput = "";
+      operator = value;
+      display.textContent = firstValue + " " + operator;
+      shouldResetScreen = true;
       return;
     }
 
+    // EQUALS
     if (value === "=") {
-      if (currentInput === "" || operator === "") return;
+      if (operator === "" || currentInput === "") return;
       const secondValue = currentInput;
       const result = calculate(firstValue, secondValue, operator);
       display.textContent = result;
       currentInput = result;
       operator = "";
+      shouldResetScreen = true;
       return;
+    }
+
+    // NUMBERS & DOT
+    if (shouldResetScreen) {
+      currentInput = "";
+      shouldResetScreen = false;
     }
 
     currentInput += value;
