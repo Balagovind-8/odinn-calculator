@@ -10,7 +10,7 @@ buttons.forEach(button => {
   button.addEventListener("click", () => {
     const value = button.textContent;
 
-    // CLEAR
+
     if (value === "C") {
       currentInput = "";
       firstValue = "";
@@ -19,7 +19,7 @@ buttons.forEach(button => {
       return;
     }
 
-    // OPERATOR
+
     if (["+", "-", "*", "/"].includes(value)) {
       if (currentInput === "") return;
       firstValue = currentInput;
@@ -29,7 +29,7 @@ buttons.forEach(button => {
       return;
     }
 
-    // EQUALS
+
     if (value === "=") {
       if (operator === "" || currentInput === "") return;
       const secondValue = currentInput;
@@ -41,7 +41,7 @@ buttons.forEach(button => {
       return;
     }
 
-    // NUMBERS & DOT
+
     if (shouldResetScreen) {
       currentInput = "";
       shouldResetScreen = false;
